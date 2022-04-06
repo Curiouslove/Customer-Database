@@ -1,0 +1,5 @@
+-- create database customer_database;
+--
+-- create user 'customer'@'localhost' identified by 'password';
+-- grant all privileges on customer_database.* to 'customer'@'localhost';
+-- flush privileges;
