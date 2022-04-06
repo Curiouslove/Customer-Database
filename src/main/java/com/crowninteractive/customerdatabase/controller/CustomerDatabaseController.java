@@ -1,7 +1,10 @@
 package com.crowninteractive.customerdatabase.controller;
 
+import com.crowninteractive.customerdatabase.data.model.BillingDetail;
 import com.crowninteractive.customerdatabase.data.model.Customer;
+import com.crowninteractive.customerdatabase.dto.request.BillingDetailDto;
 import com.crowninteractive.customerdatabase.dto.request.CustomerDto;
+import com.crowninteractive.customerdatabase.service.BillingDetailService;
 import com.crowninteractive.customerdatabase.service.CustomerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,7 @@ import java.util.List;
 @RequestMapping("/api/")
 public class CustomerDatabaseController {
     private final CustomerService customerService;
+    private final BillingDetailService billingDetailService;
 
     @GetMapping("customers")
     public ResponseEntity<?> getAllCustomers(){
@@ -33,4 +37,18 @@ public class CustomerDatabaseController {
         customerService.saveACustomer(customerDto);
         return new ResponseEntity<>("Customer has been saved to the database", HttpStatus.CREATED);
     }
+
+    @GetMapping("customer/billings/{customerId}")
+    public ResponseEntity<?> getCustomerBillingDetails(@PathVariable Long customerId){
+        List<BillingDetail> customerBillingDetails = billingDetailService.findBillingDetailsByCustomerId(customerId);
+        return new ResponseEntity<>(customerBillingDetails, HttpStatus.OK);
+    }
+
+    @PostMapping("customer/billing/details")
+    public ResponseEntity<?> addBillingDetailsToCustomer(@RequestBody BillingDetailDto billingDetailDto){
+        billingDetailService.saveBillingDetails(billingDetailDto);
+        return new ResponseEntity<>("Successfully added billing details", HttpStatus.CREATED);
+    }
+
+
 }

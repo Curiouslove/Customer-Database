@@ -25,8 +25,10 @@ public class CustomerServiceImpl implements CustomerService{
         Optional<Customer> customer = customerRepository.findById(id);
         if(customer.isPresent()){
             return customer.get();
-        }else
-       throw new ResourceNotFoundException("Customer", "id", String.valueOf(id));
+        }
+        else {
+            throw new ResourceNotFoundException("Customer", "id", String.valueOf(id));
+        }
     }
 
     @Override

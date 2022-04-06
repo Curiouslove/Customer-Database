@@ -1,6 +1,7 @@
 package com.crowninteractive.customerdatabase.data.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
@@ -13,9 +14,10 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String firstName;
@@ -26,7 +28,5 @@ public class Customer {
     @Column(unique = true)
     private String emailAddress;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<BillingDetail> billingDetails;
 
 }

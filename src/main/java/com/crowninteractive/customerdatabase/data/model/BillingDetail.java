@@ -1,6 +1,9 @@
 package com.crowninteractive.customerdatabase.data.model;
 
+import com.crowninteractive.customerdatabase.configuration.PriceConfiguration;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,15 +14,20 @@ import java.math.BigDecimal;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class BillingDetail {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(unique = true)
     private String accountNumber;
 
+    @JsonSerialize(using = PriceConfiguration.class)
     private BigDecimal tariff;
+
+    @ManyToOne
+    private Customer customer;
 
     @PrePersist
     public void updateAccountNumberWithExtension(){
